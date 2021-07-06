@@ -10,7 +10,7 @@
             android:layout_gravity="top"
             android:scaleType="fitXY"
             tools:srcCompat="@tools:sample/backgrounds/scenic"
-            android:layout_height="150dp"
+            android:layout_height="match_parent"
             tools:ignore="ContentDescription" />
         <LinearLayout
             android:id="@+id/linear_layout"

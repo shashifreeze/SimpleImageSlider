@@ -73,37 +73,37 @@ class SimpleSliderView @JvmOverloads constructor(
 
         val typedArray = context.theme.obtainStyledAttributes(
             attrs,
-            R.styleable.ImageSlider,
+            R.styleable.SimpleSlider,
             defStyleAttr,
             defStyleAttr
         )
 
-        cornerRadius = typedArray.getInt(R.styleable.ImageSlider_is_corner_radius, 1)
-        period = typedArray.getInt(R.styleable.ImageSlider_is_period, 1000).toLong()
-        delay = typedArray.getInt(R.styleable.ImageSlider_is_delay, 1000).toLong()
-        autoCycle = typedArray.getBoolean(R.styleable.ImageSlider_is_auto_cycle, false)
+        cornerRadius = typedArray.getInt(R.styleable.SimpleSlider_ss_corner_radius, 1)
+        period = typedArray.getInt(R.styleable.SimpleSlider_ss_period, 1000).toLong()
+        delay = typedArray.getInt(R.styleable.SimpleSlider_ss_delay, 1000).toLong()
+        autoCycle = typedArray.getBoolean(R.styleable.SimpleSlider_ss_auto_slide, false)
         placeholder =
-            typedArray.getResourceId(R.styleable.ImageSlider_is_placeholder, R.drawable.loading)
+            typedArray.getResourceId(R.styleable.SimpleSlider_ss_placeholder, R.drawable.loading)
         errorImage =
-            typedArray.getResourceId(R.styleable.ImageSlider_is_error_image, R.drawable.error)
+            typedArray.getResourceId(R.styleable.SimpleSlider_ss_error_image, R.drawable.error)
         selectedDotColor = typedArray.getResourceId(
-            R.styleable.ImageSlider_is_selected_dot,
+            R.styleable.SimpleSlider_ss_selected_dot_color,
             R.color.black
         )
         unselectedDotColor = typedArray.getResourceId(
-            R.styleable.ImageSlider_is_unselected_dot,
+            R.styleable.SimpleSlider_ss_unselected_dot_color,
             R.color.white
         )
         titleBackground = typedArray.getResourceId(
-            R.styleable.ImageSlider_is_title_background,
+            R.styleable.SimpleSlider_ss_title_background,
             R.drawable.gradient
         )
 
-        typedArray.getString(R.styleable.ImageSlider_is_text_align)?.let {
+        typedArray.getString(R.styleable.SimpleSlider_ss_text_align)?.let {
             textAlign = it
         }
 
-        typedArray.getString(R.styleable.ImageSlider_is_indicator_align)?.let {
+        typedArray.getString(R.styleable.SimpleSlider_ss_indicator_align)?.let {
             indicatorAlign = it
         }
 
@@ -173,6 +173,7 @@ class SimpleSliderView @JvmOverloads constructor(
         )
         viewPager?.adapter = sliderViewPagerAdapter
         imageCount = imageList.size
+        addDotView(0)
         if (imageList.isNotEmpty()) {
             //setupDots(imageList.size)
             if (autoCycle) {
