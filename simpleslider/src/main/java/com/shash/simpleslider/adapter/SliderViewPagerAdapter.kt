@@ -39,11 +39,30 @@ class SliderViewPagerAdapter(context: Context,
     {
         fun bind(slideModel: SlideModel)
         {
-            Glide.with(binding.root.context)
-                .load(slideModel.imagePath)
-                .centerCrop()
-                .into(binding.imageView)
+            //setting scale type
+            when(scaleType)
+            {
+                ScaleTypes.FIT -> Glide.with(binding.root.context)
+                    .load(slideModel.imagePath)
+                    .fitCenter()
+                    .into(binding.imageView)
+                ScaleTypes.CENTER_CROP -> Glide.with(binding.root.context)
+                    .load(slideModel.imagePath)
+                    .centerCrop()
+                    .into(binding.imageView)
+                ScaleTypes.CENTER_INSIDE -> Glide.with(binding.root.context)
+                    .load(slideModel.imagePath)
+                    .centerInside()
+                    .into(binding.imageView)
+                null -> Glide.with(binding.root.context)
+                    .load(slideModel.imagePath)
+                    .into(binding.imageView)
+            }
+            //title alignment
+            binding.textView.gravity=getGravityFromAlign(textAlign)
+            binding.textView.setBackgroundResource(titleBackground)
 
+            //Setting listeners
             binding.imageView.setOnClickListener {
                 sliderItemClickListener?.onItemSelected(adapterPosition)
             }

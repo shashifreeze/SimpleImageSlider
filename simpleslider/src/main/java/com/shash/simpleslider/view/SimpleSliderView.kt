@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Html
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -15,7 +16,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.imagesliderdemo.slider.constants.ScaleTypes
-import com.shash.simpleslider.R
+import com.shash.simpleslider.*
 import com.shash.simpleslider.`interface`.ItemChangeListener
 import com.shash.simpleslider.`interface`.SliderItemClickListener
 import com.shash.simpleslider.`interface`.TouchListener
@@ -23,6 +24,7 @@ import com.shash.simpleslider.adapter.SliderViewPagerAdapter
 import com.shash.simpleslider.constants.ActionTypes
 import com.shash.simpleslider.model.SlideModel
 import java.util.*
+
 
 /**
  *@author = Shashi
@@ -161,19 +163,22 @@ class SimpleSliderView @JvmOverloads constructor(
      *
      * @param  imageList  the image list by user
      */
-    fun setImageList(imageList: List<SlideModel>) {
-        sliderViewPagerAdapter = SliderViewPagerAdapter(
-            context,
-            imageList,
-            cornerRadius,
-            errorImage,
-            placeholder,
-            titleBackground,
-            textAlign
-        )
-        viewPager?.adapter = sliderViewPagerAdapter
+    fun setImageList(imageList: List<SlideModel>,scale: ScaleTypes? = null) {
+        sliderViewPagerAdapter =
+            SliderViewPagerAdapter(
+                context,
+                imageList,
+                cornerRadius,
+                errorImage,
+                placeholder,
+                titleBackground,
+                scale,
+                textAlign,
+            )
         imageCount = imageList.size
-        addDotView(0)
+        currentPage=0
+        viewPager?.adapter = sliderViewPagerAdapter
+        addDotView(currentPage)
         if (imageList.isNotEmpty()) {
             //setupDots(imageList.size)
             if (autoCycle) {
@@ -191,7 +196,10 @@ class SimpleSliderView @JvmOverloads constructor(
         pagerDotsLayout?.gravity = getGravityFromAlign(indicatorAlign)
         pagerDotsArray = arrayOfNulls(imageCount)
         pagerDotsArray?.let { dots ->
+
+
             for (i in 0 until imageCount) {
+
                 dots[i] = TextView(context)
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
                     dots[i]?.text = Html.fromHtml("&#8226", Html.FROM_HTML_MODE_LEGACY)
@@ -210,33 +218,7 @@ class SimpleSliderView @JvmOverloads constructor(
             if (dots.isNotEmpty()) {
                 dots[currentPage]?.setTextColor(ContextCompat.getColor(context,selectedDotColor))
                 dots[currentPage]?.textSize=35f
-            }
-        }
-    }
-
-    /**
-     * Set image list to adapter.
-     *
-     * @param  imageList  the image list by user
-     * @param  scaleType  scale type for all image
-     */
-    fun setImageList(imageList: List<SlideModel>, scaleType: ScaleTypes? = null) {
-        sliderViewPagerAdapter = SliderViewPagerAdapter(
-            context,
-            imageList,
-            cornerRadius,
-            errorImage,
-            placeholder,
-            titleBackground,
-            scaleType,
-            textAlign
-        )
-        viewPager?.adapter = sliderViewPagerAdapter
-        imageCount = imageList.size
-        if (imageList.isNotEmpty()) {
-            //setupDots(imageList.size)
-            if (autoCycle) {
-                startSliding()
+                Log.d("adsfafsasdf","${pagerDotsLayout==null} shashi")
             }
         }
     }
@@ -324,5 +306,6 @@ class SimpleSliderView @JvmOverloads constructor(
             }
         }
     }
+
 
 }

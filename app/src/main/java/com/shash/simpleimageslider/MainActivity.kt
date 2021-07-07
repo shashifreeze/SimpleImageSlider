@@ -3,6 +3,7 @@ package com.shash.simpleimageslider
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.imagesliderdemo.slider.constants.ScaleTypes
 import com.shash.simpleslider.`interface`.SliderItemClickListener
 import com.shash.simpleslider.`interface`.TouchListener
 import com.shash.simpleslider.constants.ActionTypes
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         sliderView = findViewById<SimpleSliderView>(R.id.slider).also {
-            it.setImageList(list2)
+            it.setImageList(list2,scale = ScaleTypes.CENTER_CROP)
         }
 
         val itemClickListener = object : SliderItemClickListener {
