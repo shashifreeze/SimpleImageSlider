@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         sliderView = findViewById<SimpleSliderView>(R.id.slider).also {
-            it.setImageList(list2,scale = ScaleTypes.CENTER_CROP)
+            it.setImageList(list2,scale = ScaleTypes.FIT)
         }
 
         val itemClickListener = object : SliderItemClickListener {
