@@ -2,18 +2,18 @@
 
 <resources>
 
-    <declare-styleable name="ImageSlider">
-        <attr name="is_auto_cycle" format="boolean" />
-        <attr name="is_corner_radius" format="integer" />
-        <attr name="is_period" format="integer" />
-        <attr name="is_delay" format="integer" />
-        <attr name="is_placeholder" format="reference" />
-        <attr name="is_error_image" format="reference" />
-        <attr name="is_selected_dot" format="reference|color" />
-        <attr name="is_unselected_dot" format="reference|color" />
-        <attr name="is_title_background" format="reference" />
-        <attr name="is_text_align" format="string"/>
-        <attr name="is_indicator_align" format="string"/>
+    <declare-styleable name="SimpleSlider">
+        <attr name="ss_auto_slide" format="boolean" />
+        <attr name="ss_corner_radius" format="integer" />
+        <attr name="ss_period" format="integer" />
+        <attr name="ss_delay" format="integer" />
+        <attr name="ss_placeholder" format="reference" />
+        <attr name="ss_error_image" format="reference" />
+        <attr name="ss_selected_dot_color" format="reference|color" />
+        <attr name="ss_unselected_dot_color" format="reference|color" />
+        <attr name="ss_title_background" format="reference" />
+        <attr name="ss_text_align" format="string"/>
+        <attr name="ss_indicator_align" format="string"/>
     </declare-styleable>
 
 </resources>

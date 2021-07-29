@@ -6,16 +6,17 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Html
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
-import com.example.imagesliderdemo.slider.constants.ScaleTypes
-import com.shash.simpleslider.R
+import com.shash.simpleslider.*
 import com.shash.simpleslider.`interface`.ItemChangeListener
 import com.shash.simpleslider.`interface`.SliderItemClickListener
 import com.shash.simpleslider.`interface`.TouchListener
@@ -23,6 +24,7 @@ import com.shash.simpleslider.adapter.SliderViewPagerAdapter
 import com.shash.simpleslider.constants.ActionTypes
 import com.shash.simpleslider.model.SlideModel
 import java.util.*
+
 
 /**
  *@author = Shashi
@@ -73,37 +75,37 @@ class SimpleSliderView @JvmOverloads constructor(
 
         val typedArray = context.theme.obtainStyledAttributes(
             attrs,
-            R.styleable.ImageSlider,
+            R.styleable.SimpleSlider,
             defStyleAttr,
             defStyleAttr
         )
 
-        cornerRadius = typedArray.getInt(R.styleable.ImageSlider_is_corner_radius, 1)
-        period = typedArray.getInt(R.styleable.ImageSlider_is_period, 1000).toLong()
-        delay = typedArray.getInt(R.styleable.ImageSlider_is_delay, 1000).toLong()
-        autoCycle = typedArray.getBoolean(R.styleable.ImageSlider_is_auto_cycle, false)
+        cornerRadius = typedArray.getInt(R.styleable.SimpleSlider_ss_corner_radius, 1)
+        period = typedArray.getInt(R.styleable.SimpleSlider_ss_period, 1000).toLong()
+        delay = typedArray.getInt(R.styleable.SimpleSlider_ss_delay, 1000).toLong()
+        autoCycle = typedArray.getBoolean(R.styleable.SimpleSlider_ss_auto_slide, false)
         placeholder =
-            typedArray.getResourceId(R.styleable.ImageSlider_is_placeholder, R.drawable.loading)
+            typedArray.getResourceId(R.styleable.SimpleSlider_ss_placeholder, R.drawable.loading)
         errorImage =
-            typedArray.getResourceId(R.styleable.ImageSlider_is_error_image, R.drawable.error)
+            typedArray.getResourceId(R.styleable.SimpleSlider_ss_error_image, R.drawable.error)
         selectedDotColor = typedArray.getResourceId(
-            R.styleable.ImageSlider_is_selected_dot,
+            R.styleable.SimpleSlider_ss_selected_dot_color,
             R.color.black
         )
         unselectedDotColor = typedArray.getResourceId(
-            R.styleable.ImageSlider_is_unselected_dot,
+            R.styleable.SimpleSlider_ss_unselected_dot_color,
             R.color.white
         )
         titleBackground = typedArray.getResourceId(
-            R.styleable.ImageSlider_is_title_background,
+            R.styleable.SimpleSlider_ss_title_background,
             R.drawable.gradient
         )
 
-        typedArray.getString(R.styleable.ImageSlider_is_text_align)?.let {
+        typedArray.getString(R.styleable.SimpleSlider_ss_text_align)?.let {
             textAlign = it
         }
 
-        typedArray.getString(R.styleable.ImageSlider_is_indicator_align)?.let {
+        typedArray.getString(R.styleable.SimpleSlider_ss_indicator_align)?.let {
             indicatorAlign = it
         }
 
@@ -161,18 +163,22 @@ class SimpleSliderView @JvmOverloads constructor(
      *
      * @param  imageList  the image list by user
      */
-    fun setImageList(imageList: List<SlideModel>) {
-        sliderViewPagerAdapter = SliderViewPagerAdapter(
-            context,
-            imageList,
-            cornerRadius,
-            errorImage,
-            placeholder,
-            titleBackground,
-            textAlign
-        )
-        viewPager?.adapter = sliderViewPagerAdapter
+    fun setImageList(imageList: List<SlideModel>,scale: ImageView.ScaleType? = null) {
+        sliderViewPagerAdapter =
+            SliderViewPagerAdapter(
+                context,
+                imageList,
+                cornerRadius,
+                errorImage,
+                placeholder,
+                titleBackground,
+                scale,
+                textAlign,
+            )
         imageCount = imageList.size
+        currentPage=0
+        viewPager?.adapter = sliderViewPagerAdapter
+        addDotView(currentPage)
         if (imageList.isNotEmpty()) {
             //setupDots(imageList.size)
             if (autoCycle) {
@@ -190,7 +196,10 @@ class SimpleSliderView @JvmOverloads constructor(
         pagerDotsLayout?.gravity = getGravityFromAlign(indicatorAlign)
         pagerDotsArray = arrayOfNulls(imageCount)
         pagerDotsArray?.let { dots ->
+
+
             for (i in 0 until imageCount) {
+
                 dots[i] = TextView(context)
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
                     dots[i]?.text = Html.fromHtml("&#8226", Html.FROM_HTML_MODE_LEGACY)
@@ -209,33 +218,7 @@ class SimpleSliderView @JvmOverloads constructor(
             if (dots.isNotEmpty()) {
                 dots[currentPage]?.setTextColor(ContextCompat.getColor(context,selectedDotColor))
                 dots[currentPage]?.textSize=35f
-            }
-        }
-    }
-
-    /**
-     * Set image list to adapter.
-     *
-     * @param  imageList  the image list by user
-     * @param  scaleType  scale type for all image
-     */
-    fun setImageList(imageList: List<SlideModel>, scaleType: ScaleTypes? = null) {
-        sliderViewPagerAdapter = SliderViewPagerAdapter(
-            context,
-            imageList,
-            cornerRadius,
-            errorImage,
-            placeholder,
-            titleBackground,
-            scaleType,
-            textAlign
-        )
-        viewPager?.adapter = sliderViewPagerAdapter
-        imageCount = imageList.size
-        if (imageList.isNotEmpty()) {
-            //setupDots(imageList.size)
-            if (autoCycle) {
-                startSliding()
+                Log.d("adsfafsasdf","${pagerDotsLayout==null} shashi")
             }
         }
     }
@@ -323,5 +306,6 @@ class SimpleSliderView @JvmOverloads constructor(
             }
         }
     }
+
 
 }

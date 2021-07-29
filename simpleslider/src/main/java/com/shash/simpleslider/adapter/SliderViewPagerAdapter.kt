@@ -2,10 +2,10 @@ package com.shash.simpleslider.adapter
 
 import android.content.Context
 import android.view.*
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shash.simpleslider.constants.ActionTypes
-import com.example.imagesliderdemo.slider.constants.ScaleTypes
 import com.shash.simpleslider.`interface`.SliderItemClickListener
 import com.shash.simpleslider.`interface`.TouchListener
 import com.shash.simpleslider.databinding.PagerRowBinding
@@ -22,7 +22,7 @@ class SliderViewPagerAdapter(context: Context,
                              private var errorImage: Int,
                              private var placeholder: Int,
                              private var titleBackground: Int,
-                             private var scaleType: ScaleTypes?,
+                             private var scaleType: ImageView.ScaleType?,
                              private var textAlign: String) : RecyclerView.Adapter<SliderViewPagerAdapter.ImageViewHolder>() {
 
     constructor(context: Context, imageList: List<SlideModel>, radius: Int, errorImage: Int, placeholder: Int, titleBackground: Int, textAlign: String) :
@@ -39,11 +39,19 @@ class SliderViewPagerAdapter(context: Context,
     {
         fun bind(slideModel: SlideModel)
         {
+            //setting scale type
+            scaleType?.let {
+                binding.imageView.scaleType = it
+            }
             Glide.with(binding.root.context)
                 .load(slideModel.imagePath)
-                .centerCrop()
                 .into(binding.imageView)
 
+            //title alignment
+            binding.textView.gravity=getGravityFromAlign(textAlign)
+            binding.textView.setBackgroundResource(titleBackground)
+
+            //Setting listeners
             binding.imageView.setOnClickListener {
                 sliderItemClickListener?.onItemSelected(adapterPosition)
             }
