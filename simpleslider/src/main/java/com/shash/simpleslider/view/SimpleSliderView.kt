@@ -10,12 +10,12 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
-import com.example.imagesliderdemo.slider.constants.ScaleTypes
 import com.shash.simpleslider.*
 import com.shash.simpleslider.`interface`.ItemChangeListener
 import com.shash.simpleslider.`interface`.SliderItemClickListener
@@ -163,7 +163,7 @@ class SimpleSliderView @JvmOverloads constructor(
      *
      * @param  imageList  the image list by user
      */
-    fun setImageList(imageList: List<SlideModel>,scale: ScaleTypes? = null) {
+    fun setImageList(imageList: List<SlideModel>,scale: ImageView.ScaleType? = null) {
         sliderViewPagerAdapter =
             SliderViewPagerAdapter(
                 context,

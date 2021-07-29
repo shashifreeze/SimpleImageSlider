@@ -6,7 +6,6 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shash.simpleslider.constants.ActionTypes
-import com.example.imagesliderdemo.slider.constants.ScaleTypes
 import com.shash.simpleslider.`interface`.SliderItemClickListener
 import com.shash.simpleslider.`interface`.TouchListener
 import com.shash.simpleslider.databinding.PagerRowBinding
@@ -23,7 +22,7 @@ class SliderViewPagerAdapter(context: Context,
                              private var errorImage: Int,
                              private var placeholder: Int,
                              private var titleBackground: Int,
-                             private var scaleType: ScaleTypes?,
+                             private var scaleType: ImageView.ScaleType?,
                              private var textAlign: String) : RecyclerView.Adapter<SliderViewPagerAdapter.ImageViewHolder>() {
 
     constructor(context: Context, imageList: List<SlideModel>, radius: Int, errorImage: Int, placeholder: Int, titleBackground: Int, textAlign: String) :
@@ -41,36 +40,13 @@ class SliderViewPagerAdapter(context: Context,
         fun bind(slideModel: SlideModel)
         {
             //setting scale type
-            when(scaleType)
-            {
-                ScaleTypes.FIT -> {
-                    binding.imageView.scaleType = ImageView.ScaleType.FIT_CENTER
-
-                    Glide.with(binding.root.context)
-                        .load(slideModel.imagePath)
-                        .into(binding.imageView)
-
-                }
-                ScaleTypes.CENTER_CROP -> {
-                    binding.imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-                    Glide.with(binding.root.context)
-                        .load(slideModel.imagePath)
-                        .into(binding.imageView)
-                }
-                ScaleTypes.CENTER_INSIDE -> {
-
-                    binding.imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                    Glide.with(binding.root.context)
-                        .load(slideModel.imagePath)
-                        .into(binding.imageView)
-                }
-                null -> {
-                    binding.imageView.scaleType = ImageView.ScaleType.FIT_CENTER
-                    Glide.with(binding.root.context)
-                        .load(slideModel.imagePath)
-                        .into(binding.imageView)
-                }
+            scaleType?.let {
+                binding.imageView.scaleType = it
             }
+            Glide.with(binding.root.context)
+                .load(slideModel.imagePath)
+                .into(binding.imageView)
+
             //title alignment
             binding.textView.gravity=getGravityFromAlign(textAlign)
             binding.textView.setBackgroundResource(titleBackground)
