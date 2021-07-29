@@ -3,7 +3,7 @@ ImageSlider based on viewpager2
 
 Usage:
 Add to your Activity/Fragment layout file
-
+```XML
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,10 +26,13 @@ Add to your Activity/Fragment layout file
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-          
+```          
 In Java or Kotlin File.
 
- val list = arrayListOf(
+```kotlin
+    
+    //List of SlideModel class that we will set to SliderView
+    val list = arrayListOf(
             SlideModel(
                 "https://www.bigbasket.com/media/uploads/banner_images/L1-NNP11224-1200x300-5thmar.jpg",
                 "one"
@@ -47,12 +50,15 @@ In Java or Kotlin File.
                 "four"
             )
         )
-        
+        //Finding siderview by id
         sliderView = findViewById<SliderView>(R.id.slider).also {
+            //setting slide model list to slider view using below id 
             it.setImageList(list2)
         }
-
+        //Implement SliderItemClickListener where we get onItem selected method
         val itemClickListener = object : SliderItemClickListener {
+            
+            //This method will be called when someone clicks on any slider item
             override fun onItemSelected(position: Int) {
 
                     Toast.makeText(
@@ -63,8 +69,6 @@ In Java or Kotlin File.
 
             }
         }
-     
+        //Set listener to sliderview
         sliderView.setSliderItemClickListener(itemClickListener)
-        
-        
-        
+    ```   
