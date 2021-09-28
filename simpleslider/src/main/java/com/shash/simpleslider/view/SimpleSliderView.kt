@@ -1,6 +1,7 @@
 package com.shash.simpleslider.view
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -24,7 +25,6 @@ import com.shash.simpleslider.adapter.SliderViewPagerAdapter
 import com.shash.simpleslider.constants.ActionTypes
 import com.shash.simpleslider.model.SlideModel
 import java.util.*
-
 
 /**
  *@author = Shashi
@@ -53,12 +53,15 @@ class SimpleSliderView @JvmOverloads constructor(
     private var errorImage = 0
     private var placeholder = 0
     private var titleBackground = 0
+    private var headerBackground = 0
+    private var titleTextColor:Int=0
+    private var headerTextColor:Int=0
     private var textAlign = "LEFT"
     private var indicatorAlign = "CENTER"
     private var swipeTimer = Timer()
     private var itemChangeListener: ItemChangeListener? = null
     private var touchListener: TouchListener? = null
-    var isTouchMoving :Boolean = false
+    private var isTouchMoving :Boolean = false
 
     private var onImageChangeCallback: ViewPager2.OnPageChangeCallback =
         object : ViewPager2.OnPageChangeCallback() {
@@ -100,6 +103,15 @@ class SimpleSliderView @JvmOverloads constructor(
             R.styleable.SimpleSlider_ss_title_background,
             R.drawable.gradient
         )
+
+        headerBackground = typedArray.getResourceId(
+            R.styleable.SimpleSlider_ss_header_background,
+            R.drawable.gradient
+        )
+
+        headerTextColor = typedArray.getColor(R.styleable.SimpleSlider_ss_header_text_color, Color.WHITE)
+
+        titleTextColor = typedArray.getColor(R.styleable.SimpleSlider_ss_title_text_color, Color.WHITE)
 
         typedArray.getString(R.styleable.SimpleSlider_ss_text_align)?.let {
             textAlign = it
@@ -164,6 +176,7 @@ class SimpleSliderView @JvmOverloads constructor(
      * @param  imageList  the image list by user
      */
     fun setImageList(imageList: List<SlideModel>,scale: ImageView.ScaleType? = null) {
+
         sliderViewPagerAdapter =
             SliderViewPagerAdapter(
                 context,
@@ -172,6 +185,9 @@ class SimpleSliderView @JvmOverloads constructor(
                 errorImage,
                 placeholder,
                 titleBackground,
+                headerBackground,
+                headerTextColor = headerTextColor,
+                titleTextColor = titleTextColor,
                 scale,
                 textAlign,
             )
@@ -259,7 +275,6 @@ class SimpleSliderView @JvmOverloads constructor(
         }, delay,period)
     }
 
-
     /**
      * Set item click listener for listen to image click
      *
@@ -293,7 +308,7 @@ class SimpleSliderView @JvmOverloads constructor(
      *
      * @param  indicatorAlign  indicator align by user
      */
-    fun getGravityFromAlign(textAlign: String): Int {
+    private fun getGravityFromAlign(textAlign: String): Int {
         return when (textAlign) {
             "END" -> {
                 Gravity.END
@@ -306,6 +321,4 @@ class SimpleSliderView @JvmOverloads constructor(
             }
         }
     }
-
-
 }

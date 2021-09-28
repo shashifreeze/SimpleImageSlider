@@ -19,24 +19,28 @@ class MainActivity : AppCompatActivity() {
         val list2 = arrayListOf(
             SlideModel(
                 "https://www.bigbasket.com/media/uploads/banner_images/L1-NNP11224-1200x300-5thmar.jpg",
-                "one"
+                 header = "Header",
+                 title = "Title"
             ),
             SlideModel(
                 "https://www.bigbasket.com/media/customPage/867fc27d-be52-4858-8957-fd28a25b07ba/439c2958-4cbe-4c19-a6be-f98c496742bc/4bea1631-316f-4c04-bcf6-8c91cdbb8158/cheese--1130X400-16thoct.jpg",
-                "two"
+                header = "Header",
+                title = "Title"
             ),
             SlideModel(
                 "https://www.bigbasket.com/media/uploads/banner_images/L1-CXNP786-1200x300-29thapr.jpg",
-                "three"
+                header = "Header",
+                title = "Title"
             ),
             SlideModel(
                 "https://www.bigbasket.com/media/uploads/banner_images/hp_cm_460_050721_Bangalore.jpeg",
-                "four"
+                header = "Header",
+                title = "Title"
             )
         )
 
         sliderView = findViewById<SimpleSliderView>(R.id.slider).also {
-            it.setImageList(list2,scale = ImageView.ScaleType.CENTER_INSIDE)
+            it.setImageList(list2,scale = ImageView.ScaleType.CENTER_CROP)
         }
 
         val itemClickListener = object : SliderItemClickListener {

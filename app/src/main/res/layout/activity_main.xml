@@ -8,8 +8,12 @@
 
     <com.shash.simpleslider.view.SimpleSliderView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        app:ss_auto_slide = "false"
+        android:layout_height="120dp"
+        app:ss_auto_slide = "true"
+        app:ss_period = "1500"
+        app:ss_title_text_color="@color/black"
+        app:ss_header_text_color="@color/purple_200"
+        app:ss_delay="1500"
         android:id="@+id/slider"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

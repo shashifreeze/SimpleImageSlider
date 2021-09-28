@@ -10,4 +10,4 @@ import kotlinx.parcelize.Parcelize
  *@description = This class handles
  */
 @Parcelize
-data class SlideModel(var imagePath:String?, var title:String?=null, var scaleType: ImageView.ScaleType?=null):Parcelable
+data class SlideModel(var imagePath:String?, val header:String?=null,  var title:String?=null, var scaleType: ImageView.ScaleType?=null):Parcelable

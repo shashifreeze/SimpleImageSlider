@@ -22,11 +22,15 @@ class SliderViewPagerAdapter(context: Context,
                              private var errorImage: Int,
                              private var placeholder: Int,
                              private var titleBackground: Int,
+                             private var headerBackground: Int,
+                             private var headerTextColor: Int,
+                             private var titleTextColor: Int,
                              private var scaleType: ImageView.ScaleType?,
                              private var textAlign: String) : RecyclerView.Adapter<SliderViewPagerAdapter.ImageViewHolder>() {
 
-    constructor(context: Context, imageList: List<SlideModel>, radius: Int, errorImage: Int, placeholder: Int, titleBackground: Int, textAlign: String) :
-            this(context, imageList, radius, errorImage, placeholder, titleBackground, null, textAlign)
+    constructor(context: Context, imageList: List<SlideModel>, radius: Int, errorImage: Int, placeholder: Int, titleBackground: Int,headerBackground: Int,  headerTextColor: Int,
+                 titleTextColor: Int, textAlign: String) :
+            this(context, imageList, radius, errorImage, placeholder, titleBackground,headerBackground,headerTextColor,titleTextColor, null, textAlign)
 
     private var sliderItemClickListener: SliderItemClickListener? = null
     private var touchListener: TouchListener? = null
@@ -43,18 +47,28 @@ class SliderViewPagerAdapter(context: Context,
             scaleType?.let {
                 binding.imageView.scaleType = it
             }
+
             Glide.with(binding.root.context)
                 .load(slideModel.imagePath)
                 .into(binding.imageView)
 
             //title alignment
-            binding.textView.gravity=getGravityFromAlign(textAlign)
-            binding.textView.setBackgroundResource(titleBackground)
+            binding.titleTV.text = slideModel.title
+            binding.titleTV.gravity=getGravityFromAlign(textAlign)
+            binding.titleTV.setBackgroundResource(titleBackground)
+            binding.titleTV.setTextColor(titleTextColor)
+
+            //header alignment
+            binding.headerTV.text = slideModel.header
+            binding.headerTV.gravity=getGravityFromAlign(textAlign)
+            binding.headerTV.setBackgroundResource(headerBackground)
+            binding.headerTV.setTextColor(headerTextColor)
 
             //Setting listeners
             binding.imageView.setOnClickListener {
                 sliderItemClickListener?.onItemSelected(adapterPosition)
             }
+
 
             binding.imageView.setOnTouchListener { v, event ->
                 touchListener?.let {
