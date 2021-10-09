@@ -37,11 +37,11 @@ Add to your Activity/Fragment layout file </b>
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:id="@+id/slider"
-        app:is_delay="1000"
-        app:is_auto_cycle="true"
-        app:is_period="1000"
-        app:is_selected_dot="@android:color/holo_red_dark"
-        app:is_unselected_dot="@color/yellow"
+        app:ss_delay="1000"
+        app:ss_auto_cycle="true"
+        app:ss_period="1000"
+        app:ss_selected_dot="@android:color/holo_red_dark"
+        app:ss_unselected_dot="@color/yellow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -96,7 +96,7 @@ In Kotlin File.
         }
         //Set listener to sliderview
         sliderView.setSliderItemClickListener(itemClickListener)
-    ```   
+ ``` 
     
    <b>SimpleImageSlider example:</b>
    https://github.com/shashifreeze/SimpleImageSlider/tree/master/app/src/main
