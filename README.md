@@ -1,6 +1,24 @@
 # SimpleImageSlider
 ImageSlider based on viewpager2 
 
+Attributes:
+```XML
+        <attr name="ss_auto_slide" format="boolean" />
+        <attr name="ss_corner_radius" format="integer" />
+        <attr name="ss_period" format="integer" />
+        <attr name="ss_delay" format="integer" />
+        <attr name="ss_placeholder" format="reference" />
+        <attr name="ss_error_image" format="reference" />
+        <attr name="ss_selected_dot_color" format="reference|color" />
+        <attr name="ss_unselected_dot_color" format="reference|color" />
+        <attr name="ss_title_background" format="reference" />
+        <attr name="ss_header_background" format="reference" />
+        <attr name="ss_text_align" format="string"/>
+        <attr name="ss_header_text_color" format="color"/>
+        <attr name="ss_title_text_color" format="color"/>
+        <attr name="ss_indicator_align" format="string"/>
+```  
+
 Usage:
 Add to your Activity/Fragment layout file
 ```XML
